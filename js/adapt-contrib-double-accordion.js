@@ -6,7 +6,8 @@ define(function(require) {
     var DoubleAccordion = ComponentView.extend({
 
         events: {
-            'click .doubleaccordion-item-title': 'toggleItem'
+            'click .doubleaccordion-item-title': 'toggleItem',
+            'click .doubleaccordion-child-item-title': 'toggleChildItem'
         },
 
         preRender: function() {
@@ -61,6 +62,15 @@ define(function(require) {
             } else {
                 $(event.currentTarget).attr('aria-expanded', false);
             }
+        },
+
+         toggleChildItem: function(event) {
+            event.preventDefault();
+            console.log("hello");
+            var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
+                $(body).a11y_focus();
+            });
+
         },
 
         setVisited: function(index) {
