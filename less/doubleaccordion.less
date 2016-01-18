@@ -1,5 +1,4 @@
 .doubleaccordion-component {
-    color: red;
 
     .doubleaccordion-item {
         margin-bottom: @item-margin-bottom;
@@ -15,6 +14,14 @@
             left: inherit;
             right: @item-padding-left; 
         }
+    }
+
+    .doubleaccordion-item-text{
+        padding-bottom: 30px;
+    }
+
+    .doubleaccordion-item-title-inner{
+        padding: 10px;    
     }
 
     .doubleaccordion-item-title {
@@ -79,13 +86,18 @@
     .doubleaccordion-child-item-body {
         color: @item-body-text-color;
         background-color: @item-body-color;
+        padding: 10px;
         display:none;
     }
 
     .doubleaccordion-children {
         color: @item-body-text-color;
         background-color: @item-body-color;
-        // display:none;
+
+    }
+
+    .doubleaccordion-item-body{
+        display:none;        
     }    
 
     .doubleaccordion-item-body-inner {
@@ -97,6 +109,7 @@
 
         img {
             vertical-align: bottom;
+            height: 170px;
         }
     }
 }
