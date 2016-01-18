@@ -66,11 +66,25 @@ define(function(require) {
 
          toggleChildItem: function(event) {
             event.preventDefault();
-            console.log("hello");
-            var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
-                $(body).a11y_focus();
-            });
+            this.$('.doubleaccordion-child-item-body').stop(true, true).slideUp(200); 
+             
+            if (!$(event.currentTarget).hasClass('selected')) {   
+                var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
+                    $(body).a11y_focus();
+                });
+                this.$('.doubleaccordion-child-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
+                $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
+                if ($(event.currentTarget).hasClass('doubleaccordion-child-item')) {
+                    this.setVisited($(event.currentTarget).index());
+                } else {
+                    this.setVisited($(event.currentTarget).parent('.doubleaccordion-child-item').index());
+                }
+            } else {
+                this.$('.doubleaccordion-child-item-title').removeClass('selected');
+                $(event.currentTarget).removeClass('selected');
+                $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
+            }
         },
 
         setVisited: function(index) {
