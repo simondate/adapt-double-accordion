@@ -1,35 +1,40 @@
-<div class="accordion-inner component-inner" role="region" aria-label="{{_globals._components._accordion.ariaRegion}}">
+<div class="doubleaccordion-inner component-inner" role="region" aria-label="{{_globals._components._accordion.ariaRegion}}">
     {{> component this}}
-    <div class="accordion-widget component-widget">
+    <div class="doubleaccordion-widget component-widget">
         {{#each _items}}
-        <div class="accordion-item">
-            <button role="button" class="base accordion-item-title {{#if _isVisited}}visited{{/if}}" aria-expanded="false" aria-label="{{{title}}}">
-              <div class="accordion-item-title-inner">
-                <div class="accordion-item-title-icon icon icon-plus h5"></div>
+        <div class="doubleaccordion-item">
+            <button role="button" class="base doubleaccordion-item-title {{#if _isVisited}}visited{{/if}}" aria-expanded="false" aria-label="{{{title}}}">
+              <div class="doubleaccordion-item-title-inner">
+                <div class="doubleaccordion-item-title-icon icon icon-plus h5"></div>
                       {{{title}}}
               </div>
             </button>
-            <div class="accordion-item-body">
-                <div class="accordion-item-body-inner">
-                    <div class="accordion-item-text">
+            <div class="doubleaccordion-item-body">
+                <div class="doubleaccordion-item-body-inner">
+                    <div class="doubleaccordion-item-text">
                         {{{a11y_text body}}}
                     </div>
                     {{#if _graphic}}
                     {{#if _graphic.src}}
-                    <div class="accordion-item-graphic">
+                    <div class="doubleaccordion-item-graphic">
                         <img src="{{_graphic.src}}" aria-label="{{_graphic.alt}}" tabindex="0">
                     </div>
                     {{/if}}
                     {{/if}}
-                </div>
-                {{#each _child}}
-                    <div class="accordion-child-item-title">
-                        {{{childTitle}}}
-                            <div class="accordion-child-item-body">
+                
+                    <div class="doubleaccordion-children">
+                    {{#each _child}}
+                        <div class="doubleaccordion-child-item">
+                            <div class="doubleaccordion-child-item-title">
+                                {{{childTitle}}}
+                            </div>
+                            <div class="doubleaccordion-child-item-body">
                                 {{{childBody}}}
                             </div>
+                        </div>
+                    {{/each}}
                     </div>
-                {{/each}}
+                </div>
             </div>
         </div>
         {{/each}}

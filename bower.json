@@ -6,8 +6,8 @@
   "issues": "https://adaptlearning.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10100&issuetype=1&priority=6&components=10515",
   "description": "An accordion component that displays clickable titles, which reveal display text",
   "main": "/js/adapt-contrib-double-accordion.js",
-  "displayName" : "DoubleAccordion",
-  "component" : "double-accordion",
+  "displayName" : "Double Accordion",
+  "component" : "doubleaccordion",
   "keywords": [
     "adapt-plugin",
     "adapt-component"

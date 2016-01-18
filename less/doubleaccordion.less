@@ -1,10 +1,11 @@
-.accordion-component {
+.doubleaccordion-component {
+    color: red;
 
-    .accordion-item {
+    .doubleaccordion-item {
         margin-bottom: @item-margin-bottom;
     }
 
-    .accordion-item-title-icon {
+    .doubleaccordion-item-title-icon {
         position: absolute;
         top: 50%;
         left: @item-padding-left;
@@ -16,7 +17,7 @@
         }
     }
 
-    .accordion-item-title {
+    .doubleaccordion-item-title {
         display: block;
         position: relative;
         padding: @item-padding;
@@ -35,7 +36,7 @@
             background-color: @item-color-visited;
             border-color: @item-border-color-visited;
 
-            .accordion-item-title-icon {
+            .doubleaccordion-item-title-icon {
                 color: @item-text-color-visited;
             }
         }
@@ -45,7 +46,7 @@
             background-color: @item-color-selected;
             border-color: @item-border-color-selected;
 
-            .accordion-item-title-icon {
+            .doubleaccordion-item-title-icon {
                 color: @item-text-color-selected;
             }
         }
@@ -56,7 +57,7 @@
                 background-color: @item-color-hover;
                 border-color: @item-border-color-hover;
 
-                .accordion-item-title-icon {
+                .doubleaccordion-item-title-icon {
                     color: @item-text-color-hover;
                 }
             }
@@ -65,7 +66,7 @@
                 background-color: @item-color-hover;
                 border-color: @item-border-color-hover;
 
-                .accordion-item-title-icon {
+                .doubleaccordion-item-title-icon {
                     color: @item-text-color-hover;
                 }
             }
@@ -75,17 +76,23 @@
         }
     }
 
-    .accordion-item-body {
+    .doubleaccordion-item-body {
         color: @item-body-text-color;
         background-color: @item-body-color;
-        display:none;
+        // display:none;
     }
 
-    .accordion-item-body-inner {
+    .doubleaccordion-children {
+        color: @item-body-text-color;
+        background-color: @item-body-color;
+        // display:none;
+    }    
+
+    .doubleaccordion-item-body-inner {
         padding: @item-padding;
     }
 
-    .accordion-item-graphic {
+    .doubleaccordion-item-graphic {
         padding: @item-padding-top 0 0;
 
         img {

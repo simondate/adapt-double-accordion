@@ -6,8 +6,7 @@ define(function(require) {
     var DoubleAccordion = ComponentView.extend({
 
         events: {
-            'click .accordion-item-title': 'toggleItem',
-            ' click .accordion-child-item-title': 'toggleChildItem'
+            'click .doubleaccordion-item-title': 'toggleItem'
         },
 
         preRender: function() {
@@ -35,29 +34,29 @@ define(function(require) {
 
         toggleItem: function(event) {
             event.preventDefault();
-            this.$('.accordion-item-body').stop(true, true).slideUp(2000);
+            this.$('.doubleaccordion-item-body').stop(true, true).slideUp(200);
 
             if (!$(event.currentTarget).hasClass('selected')) {
-                this.$('.accordion-item-title').removeClass('selected');
-                var body = $(event.currentTarget).addClass('selected visited').siblings('.accordion-item-body').slideToggle(2000, function() {
+                this.$('.doubleaccordion-item-title').removeClass('selected');
+                var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-item-body').slideToggle(200, function() {
                   $(body).a11y_focus();
                 });
-                this.$('.accordion-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
-                $('.accordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
+                this.$('.doubleaccordion-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
+                $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
-                if ($(event.currentTarget).hasClass('accordion-item')) {
+                if ($(event.currentTarget).hasClass('doubleaccordion-item')) {
                     this.setVisited($(event.currentTarget).index());
                 } else {
-                    this.setVisited($(event.currentTarget).parent('.accordion-item').index());
+                    this.setVisited($(event.currentTarget).parent('.doubleaccordion-item').index());
                 }
             } else {
-                this.$('.accordion-item-title').removeClass('selected');
+                this.$('.doubleaccordion-item-title').removeClass('selected');
                 $(event.currentTarget).removeClass('selected');
-                $('.accordion-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
+                $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
             }
             // set aria-expanded value
             if ($(event.currentTarget).hasClass('selected')) {
-                $('.accordion-item-title').attr('aria-expanded', false);
+                $('.doubleaccordion-item-title').attr('aria-expanded', false);
                 $(event.currentTarget).attr('aria-expanded', true);
             } else {
                 $(event.currentTarget).attr('aria-expanded', false);
