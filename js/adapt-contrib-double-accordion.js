@@ -29,6 +29,14 @@ define(function(require) {
             }
 
             _.each(this.model.get('_items'), function(item) {
+                console.log(item);
+                if(item.hasOwnProperty('child')){
+                 for(var i = 0; i < item._child.length; i++){
+                    console.log(item._child[i].childTitle);
+                    item._child[i]._isVisited = false;
+                }                   
+                }
+
                 item._isVisited = false;
             });
         },
@@ -76,9 +84,9 @@ define(function(require) {
                 $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
                 if ($(event.currentTarget).hasClass('doubleaccordion-child-item')) {
-                    this.setVisited($(event.currentTarget).index());
+                    this.setVisitedChild($(event.currentTarget).index());
                 } else {
-                    this.setVisited($(event.currentTarget).parent('.doubleaccordion-child-item').index());
+                    this.setVisitedChild($(event.currentTarget).parent('.doubleaccordion-child-item').index());
                 }
             } else {
                 this.$('.doubleaccordion-child-item-title').removeClass('selected');
@@ -87,8 +95,19 @@ define(function(require) {
             }
         },
 
+
+
+        setVisitedChild: function(index) {
+            // TO BE Implemented.
+            var item = this.model.get('_items')[index].child[index];
+            console.log(item)
+            item._isVisited = true;
+            this.checkCompletionStatus();
+        },        
+
         setVisited: function(index) {
             var item = this.model.get('_items')[index];
+            console.log(item)
             item._isVisited = true;
             this.checkCompletionStatus();
         },
