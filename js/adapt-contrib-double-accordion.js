@@ -30,13 +30,12 @@ define(function(require) {
 
             _.each(this.model.get('_items'), function(item) {
                 console.log(item);
-                if(item.hasOwnProperty('child')){
+                if(item.hasOwnProperty('_child')){
                  for(var i = 0; i < item._child.length; i++){
                     console.log(item._child[i].childTitle);
                     item._child[i]._isVisited = false;
-                }                   
+                    }                   
                 }
-
                 item._isVisited = false;
             });
         },
@@ -54,8 +53,10 @@ define(function(require) {
                 $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
                 if ($(event.currentTarget).hasClass('doubleaccordion-item')) {
+                    $(event.currentTarget).parent('.doubleaccordion-item').index();
                     this.setVisited($(event.currentTarget).index());
                 } else {
+                    console.log($(event.currentTarget).parent('.doubleaccordion-item'));
                     this.setVisited($(event.currentTarget).parent('.doubleaccordion-item').index());
                 }
             } else {
@@ -86,7 +87,7 @@ define(function(require) {
                 if ($(event.currentTarget).hasClass('doubleaccordion-child-item')) {
                     this.setVisitedChild($(event.currentTarget).index());
                 } else {
-                    this.setVisitedChild($(event.currentTarget).parent('.doubleaccordion-child-item').index());
+                    this.setVisitedChild($(event.currentTarget).parentsUntil('.doubleaccordion-item').parent().index(), $(event.currentTarget).parent('.doubleaccordion-child-item').index());
                 }
             } else {
                 this.$('.doubleaccordion-child-item-title').removeClass('selected');
@@ -97,9 +98,9 @@ define(function(require) {
 
 
 
-        setVisitedChild: function(index) {
+        setVisitedChild: function(parent, index) {
             // TO BE Implemented.
-            var item = this.model.get('_items')[index].child[index];
+            var item = this.model.get('_items')[parent]._child[index];
             console.log(item)
             item._isVisited = true;
             this.checkCompletionStatus();
