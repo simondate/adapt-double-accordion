@@ -24,6 +24,65 @@
         padding: 10px;    
     }
 
+    .doubleaccordion-child-item-title {
+        display: block;
+        position: relative;
+        padding: @item-padding;
+        padding-left: (@icon-size+(@item-padding-left*2));
+        color: @item-text-color;
+        background-color: @item-color;
+        text-decoration: none;
+        width: 100%;
+        .dir-rtl & {
+            padding-left:inherit;
+            padding-right:(@icon-size+(@item-padding-left*2));
+        }
+
+        &.visited {
+            color:@item-text-color-visited;
+            background-color: @item-color-visited;
+            border-color: @item-border-color-visited;
+
+            .doubleaccordion-item-title-icon {
+                color: @item-text-color-visited;
+            }
+        }
+
+        &.selected {
+            color: @item-text-color-selected;
+            background-color: @item-color-selected;
+            border-color: @item-border-color-selected;
+
+            .doubleaccordion-item-title-icon {
+                color: @item-text-color-selected;
+            }
+        }
+        
+        .no-touch & {
+            &:hover {
+                color: @item-text-color-hover;
+                background-color: @item-color-hover;
+                border-color: @item-border-color-hover;
+
+                .doubleaccordion-item-title-icon {
+                    color: @item-text-color-hover;
+                }
+            }
+            &.visited:hover {
+                color: @item-text-color-hover;
+                background-color: @item-color-hover;
+                border-color: @item-border-color-hover;
+
+                .doubleaccordion-item-title-icon {
+                    color: @item-text-color-hover;
+                }
+            }
+            &.selected:hover {
+                background-color: @item-color-hover;
+            }
+        }
+    }
+
     .doubleaccordion-item-title {
         display: block;
         position: relative;
