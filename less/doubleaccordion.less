@@ -32,7 +32,7 @@
         color: @item-text-color;
         background-color: @item-color;
         text-decoration: none;
-        width: 100%;
+        width: 90%;
         .dir-rtl & {
             padding-left:inherit;
             padding-right:(@icon-size+(@item-padding-left*2));
@@ -91,7 +91,7 @@
         color: @item-text-color;
         background-color: @item-color;
         text-decoration: none;
-        width: 100%;
+        width: 90%;
         .dir-rtl & {
             padding-left:inherit;
             padding-right:(@icon-size+(@item-padding-left*2));
@@ -142,17 +142,19 @@
         }
     }
 
+    .doubleaccordion-child-item {
+        padding-bottom: 10px;
+
+    }    
+
     .doubleaccordion-child-item-body {
         color: @item-body-text-color;
-        background-color: @item-body-color;
         padding: 10px;
         display:none;
     }
 
     .doubleaccordion-children {
         color: @item-body-text-color;
-        background-color: @item-body-color;
-
     }
 
     .doubleaccordion-item-body{
