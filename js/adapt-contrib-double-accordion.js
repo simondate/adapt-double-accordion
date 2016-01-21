@@ -65,7 +65,8 @@ define(function(require) {
             event.preventDefault();
             this.$('.doubleaccordion-child-item-body').stop(true, true).slideUp(200); 
              
-            if (!$(event.currentTarget).hasClass('selected')) {   
+            if (!$(event.currentTarget).hasClass('selected')) { 
+                this.$('.doubleaccordion-child-item-title').removeClass('selected');  
                 var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
                     $(body).a11y_focus();
                 });
