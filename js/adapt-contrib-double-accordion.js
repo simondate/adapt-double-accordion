@@ -29,7 +29,6 @@ define(function(require) {
             }
 
             _.each(this.model.get('_items'), function(item) {
-                console.log(item);
                 _.filter(item._child, function(child) {         
                     child._isVisited = false;
                 });
@@ -43,7 +42,10 @@ define(function(require) {
 
             if (!$(event.currentTarget).hasClass('selected')) {
                 this.$('.doubleaccordion-item-title').removeClass('selected');
-                var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-item-body').slideToggle(200, function() {
+                if(!this.hasChild($(event.currentTarget).parent('.doubleaccordion-item').index()))
+                     $(event.currentTarget).addClass('visited');
+                var body = $(event.currentTarget).addClass('selected').siblings('.doubleaccordion-item-body').slideToggle(200, function() {
+                    if(event.currentTarget.parent)
                   $(body).a11y_focus();
                 });
                 this.$('.doubleaccordion-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
@@ -83,7 +85,11 @@ define(function(require) {
                 if ($(event.currentTarget).hasClass('doubleaccordion-child-item')) {
                     this.setVisitedChild($(event.currentTarget).index());
                 } else {
-                    this.setVisitedChild($(event.currentTarget).parentsUntil('.doubleaccordion-item').parent().index(), $(event.currentTarget).parent('.doubleaccordion-child-item').index());
+                    if(
+                        this.setVisitedChild($(event.currentTarget).parentsUntil('.doubleaccordion-item').parent().index(), $(event.currentTarget).parent('.doubleaccordion-child-item').index())){
+                        console.log('in here');
+                     $(event.currentTarget).parentsUntil('doubleaccordion-item-body').prev().addClass('visited');
+                    }
                 }
             } else {
                 this.$('.doubleaccordion-child-item-title').removeClass('selected');
@@ -103,21 +109,26 @@ define(function(require) {
             var item = this.model.get('_items')[index];
             console.log(item);
             if(!item.hasOwnProperty('_child')){
-                console.log('does not have children');
              item._isVisited = true;               
             }
-
             this.checkCompletionStatus();
-        },        
+        },
 
-        setVisitedChild: function(parent, index) {
-            var item = this.model.get('_items')[parent];
-            var child = item._child[index];
+        hasChild: function(index){
+            console.log(index);
+            var item = this.model.get('_items')[index];            
+            if(item.hasOwnProperty('_child'))
+                return true;
+            return false;
+        },
+
+        setVisitedChild: function(index, childIndex) {
+            var item = this.model.get('_items')[index];
+            var child = item._child[childIndex];
             child._isVisited = true;
-            console.log(child);
             item._isVisited = this.checkCompletedItem(item);
             this.checkCompletionStatus();
-            console.log('item is now complete ' + item._isVisited);
+            return item._isVisited;
         },        
 
         getVisitedItems: function() {
@@ -129,7 +140,6 @@ define(function(require) {
         checkCompletedItem: function(item) {
             var pass = true;
             _.filter(item._child, function(child) {
-                console.log(child._isVisited + child.childTitle);
                 if(child._isVisited == false){                  
                     pass = false;
                 }
@@ -138,7 +148,6 @@ define(function(require) {
         },
 
         checkCompletionStatus: function() {
-            console.log(this.getVisitedItems().length);
             if (this.getVisitedItems().length == this.model.get('_items').length) {
                 this.setCompletionStatus();
             }
