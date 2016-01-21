@@ -29,20 +29,15 @@ define(function(require) {
             }
 
             _.each(this.model.get('_items'), function(item) {
-                console.log(item);
-                if(item.hasOwnProperty('_child')){
-                 for(var i = 0; i < item._child.length; i++){
-                    console.log(item._child[i].childTitle);
-                    item._child[i]._isVisited = false;
-                    }                   
-                }
-                item._isVisited = false;
+                _.filter(item._child, function(child) {         
+                    child._isVisited = false;
+                });
             });
         },
 
         toggleItem: function(event) {
             event.preventDefault();
-            this.$('.doubleaccordion-item-body').stop(true, true).slideUp(200);
+            this.$('.doubleaccordion-item-body').stop(true, true).slideUp(400);
 
             if (!$(event.currentTarget).hasClass('selected')) {
                 this.$('.doubleaccordion-item-title').removeClass('selected');
@@ -53,10 +48,8 @@ define(function(require) {
                 $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
                 if ($(event.currentTarget).hasClass('doubleaccordion-item')) {
-                    $(event.currentTarget).parent('.doubleaccordion-item').index();
                     this.setVisited($(event.currentTarget).index());
                 } else {
-                    console.log($(event.currentTarget).parent('.doubleaccordion-item'));
                     this.setVisited($(event.currentTarget).parent('.doubleaccordion-item').index());
                 }
             } else {
@@ -73,13 +66,14 @@ define(function(require) {
             }
         },
 
+
          toggleChildItem: function(event) {
             event.preventDefault();
             this.$('.doubleaccordion-child-item-body').stop(true, true).slideUp(200); 
              
             if (!$(event.currentTarget).hasClass('selected')) {   
                 var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
-                    $(body).a11y_focus();
+                    // $(body).a11y_focus();
                 });
                 this.$('.doubleaccordion-child-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
                 $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
@@ -96,35 +90,41 @@ define(function(require) {
             }
         },
 
-
-
         setVisitedChild: function(parent, index) {
-            // TO BE Implemented.
             var item = this.model.get('_items')[parent]._child[index];
-            console.log(item)
             item._isVisited = true;
+            console.log(item);
             this.checkCompletionStatus();
         },        
 
         setVisited: function(index) {
-            var item = this.model.get('_items')[index];
-            console.log(item)
-            item._isVisited = true;
-            this.checkCompletionStatus();
         },
 
         getVisitedItems: function() {
-            return _.filter(this.model.get('_items'), function(item) {
-                return item._isVisited;
-            });
+            var numItems = 0;
+                _.filter(this.model.get('_items'), function(item) {
+                    _.filter(item._child, function(child) {
+                        numItems++;
+                    });
+                });
+            return numItems;
         },
 
         checkCompletionStatus: function() {
-            if (this.getVisitedItems().length == this.model.get('_items').length) {
+            var numChild = 0;
+            _.filter(this.model.get('_items'), function(item) {
+                _.filter(item._child, function(child) {
+                    if(child._isVisited == true){                       
+                        numChild++;
+                    }
+                });
+            });
+            console.log(numChild);
+            console.log('visiting' + this.getVisitedItems());         
+            if (this.getVisitedItems() == numChild) {
                 this.setCompletionStatus();
             }
         }
-
     });
 
     Adapt.register('doubleaccordion', DoubleAccordion);
