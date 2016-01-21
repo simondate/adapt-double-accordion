@@ -47,11 +47,6 @@ define(function(require) {
                 this.$('.doubleaccordion-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
                 $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
-                if ($(event.currentTarget).hasClass('doubleaccordion-item')) {
-                    this.setVisited($(event.currentTarget).index());
-                } else {
-                    this.setVisited($(event.currentTarget).parent('.doubleaccordion-item').index());
-                }
             } else {
                 this.$('.doubleaccordion-item-title').removeClass('selected');
                 $(event.currentTarget).removeClass('selected');
@@ -66,14 +61,13 @@ define(function(require) {
             }
         },
 
-
          toggleChildItem: function(event) {
             event.preventDefault();
             this.$('.doubleaccordion-child-item-body').stop(true, true).slideUp(200); 
              
             if (!$(event.currentTarget).hasClass('selected')) {   
                 var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
-                    // $(body).a11y_focus();
+                    $(body).a11y_focus();
                 });
                 this.$('.doubleaccordion-child-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
                 $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
@@ -88,6 +82,13 @@ define(function(require) {
                 $(event.currentTarget).removeClass('selected');
                 $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
             }
+            // set aria-expanded value
+            if ($(event.currentTarget).hasClass('selected')) {
+                $('.doubleaccordion-item-title').attr('aria-expanded', false);
+                $(event.currentTarget).attr('aria-expanded', true);
+            } else {
+                $(event.currentTarget).attr('aria-expanded', false);
+            }            
         },
 
         setVisitedChild: function(parent, index) {
@@ -96,9 +97,6 @@ define(function(require) {
             console.log(item);
             this.checkCompletionStatus();
         },        
-
-        setVisited: function(index) {
-        },
 
         getVisitedItems: function() {
             var numItems = 0;
@@ -118,9 +116,8 @@ define(function(require) {
                         numChild++;
                     }
                 });
-            });
-            console.log(numChild);
-            console.log('visiting' + this.getVisitedItems());         
+            });     
+
             if (this.getVisitedItems() == numChild) {
                 this.setCompletionStatus();
             }
