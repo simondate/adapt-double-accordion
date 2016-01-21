@@ -29,9 +29,11 @@ define(function(require) {
             }
 
             _.each(this.model.get('_items'), function(item) {
+                console.log(item);
                 _.filter(item._child, function(child) {         
                     child._isVisited = false;
                 });
+                item._isVisited = false;
             });
         },
 
@@ -47,6 +49,11 @@ define(function(require) {
                 this.$('.doubleaccordion-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
                 $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
+                if ($(event.currentTarget).hasClass('doubleaccordion-item')) {
+                    this.setVisited($(event.currentTarget).index());
+                } else {
+                    this.setVisited($(event.currentTarget).parent('.doubleaccordion-item').index());
+                }
             } else {
                 this.$('.doubleaccordion-item-title').removeClass('selected');
                 $(event.currentTarget).removeClass('selected');
@@ -92,34 +99,47 @@ define(function(require) {
             }            
         },
 
-        setVisitedChild: function(parent, index) {
-            var item = this.model.get('_items')[parent]._child[index];
-            item._isVisited = true;
+        setVisited: function(index) {
+            var item = this.model.get('_items')[index];
             console.log(item);
+            if(!item.hasOwnProperty('_child')){
+                console.log('does not have children');
+             item._isVisited = true;               
+            }
+
             this.checkCompletionStatus();
         },        
 
+        setVisitedChild: function(parent, index) {
+            var item = this.model.get('_items')[parent];
+            var child = item._child[index];
+            child._isVisited = true;
+            console.log(child);
+            item._isVisited = this.checkCompletedItem(item);
+            this.checkCompletionStatus();
+            console.log('item is now complete ' + item._isVisited);
+        },        
+
         getVisitedItems: function() {
-            var numItems = 0;
-                _.filter(this.model.get('_items'), function(item) {
-                    _.filter(item._child, function(child) {
-                        numItems++;
-                    });
-                });
-            return numItems;
+            return _.filter(this.model.get('_items'), function(item) {
+                return item._isVisited;
+            });
+        },
+
+        checkCompletedItem: function(item) {
+            var pass = true;
+            _.filter(item._child, function(child) {
+                console.log(child._isVisited + child.childTitle);
+                if(child._isVisited == false){                  
+                    pass = false;
+                }
+            });
+            return pass;
         },
 
         checkCompletionStatus: function() {
-            var numChild = 0;
-            _.filter(this.model.get('_items'), function(item) {
-                _.filter(item._child, function(child) {
-                    if(child._isVisited == true){                       
-                        numChild++;
-                    }
-                });
-            });     
-
-            if (this.getVisitedItems() == numChild) {
+            console.log(this.getVisitedItems().length);
+            if (this.getVisitedItems().length == this.model.get('_items').length) {
                 this.setCompletionStatus();
             }
         }
