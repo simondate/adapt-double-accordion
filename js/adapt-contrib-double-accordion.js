@@ -6,8 +6,8 @@ define(function(require) {
     var DoubleAccordion = ComponentView.extend({
 
         events: {
-            'click .doubleaccordion-item-title': 'toggleItem',
-            'click .doubleaccordion-child-item-title': 'toggleChildItem'
+            'click .item-title': 'toggleItem',
+            'click .child-item-title': 'toggleChildItem'
         },
 
         preRender: function() {
@@ -38,36 +38,36 @@ define(function(require) {
 
         toggleItem: function(event) {
             event.preventDefault();
-            this.$('.doubleaccordion-item-body').stop(true, true).slideUp(400);
+            this.$('.item-body').stop(true, true).slideUp(400);
 
             if (!$(event.currentTarget).hasClass('selected')) { // this function extends 
-                this.$('.doubleaccordion-item-title').removeClass('selected');
-                if(!this.hasChild($(event.currentTarget).parent('.doubleaccordion-item').index())){
+                this.$('.item-title').removeClass('selected');
+                if (!this.hasChild($(event.currentTarget).parent('.item').index())){
                     $(event.currentTarget).addClass('visited');                    
                 }
 
-                var body = $(event.currentTarget).addClass('selected').siblings('.doubleaccordion-item-body').slideToggle(200, function() {
-                    if(event.currentTarget.parent){
+                var body = $(event.currentTarget).addClass('selected').siblings('.item-body').slideToggle(200, function() {
+                    if (event.currentTarget) {
                         $(body).a11y_focus();
                     }
                 });
 
-                this.$('.doubleaccordion-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
-                $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
+                this.$('.item-title-icon').removeClass('icon-minus').addClass('icon-plus');
+                $('.item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
-                if ($(event.currentTarget).hasClass('doubleaccordion-item')) {
+                if ($(event.currentTarget).hasClass('item')) {
                     this.setVisited($(event.currentTarget).index());
                 } else {
-                    this.setVisited($(event.currentTarget).parent('.doubleaccordion-item').index());
+                    this.setVisited($(event.currentTarget).parent('.item').index());
                 }
             } else {
-                this.$('.doubleaccordion-item-title').removeClass('selected');
+                this.$('.item-title').removeClass('selected');
                 $(event.currentTarget).removeClass('selected');
-                $('.doubleaccordion-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
+                $('.item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
             }
             // set aria-expanded value
             if ($(event.currentTarget).hasClass('selected')) {
-                $('.doubleaccordion-item-title').attr('aria-expanded', false);
+                $('.item-title').attr('aria-expanded', false);
                 $(event.currentTarget).attr('aria-expanded', true);
             } else {
                 $(event.currentTarget).attr('aria-expanded', false);
@@ -76,32 +76,32 @@ define(function(require) {
 
          toggleChildItem: function(event) {
             event.preventDefault();
-            this.$('.doubleaccordion-child-item-body').stop(true, true).slideUp(200);
+            this.$('.child-item-body').stop(true, true).slideUp(200);
              
             if (!$(event.currentTarget).hasClass('selected')) {
-                this.$('.doubleaccordion-child-item-title').removeClass('selected');
-                var body = $(event.currentTarget).addClass('selected visited').siblings('.doubleaccordion-child-item-body').slideToggle(200, function() {
+                this.$('.child-item-title').removeClass('selected');
+                var body = $(event.currentTarget).addClass('selected visited').siblings('.child-item-body').slideToggle(200, function() {
                     $(body).a11y_focus();
                 });
-                this.$('.doubleaccordion-child-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
-                $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
+                this.$('.child-item-title-icon').removeClass('icon-minus').addClass('icon-plus');
+                $('.child-item-title-icon', event.currentTarget).removeClass('icon-plus').addClass('icon-minus');
 
-                if ($(event.currentTarget).hasClass('doubleaccordion-child-item')) {
+                if ($(event.currentTarget).hasClass('child-item')) {
                     this.setVisitedChild($(event.currentTarget).index());
                 } else {
-                    if(
-                        this.setVisitedChild($(event.currentTarget).parentsUntil('.doubleaccordion-item').parent().index(), $(event.currentTarget).parent('.doubleaccordion-child-item').index())){
-                     $(event.currentTarget).parentsUntil('doubleaccordion-item-body').prev().addClass('visited');
+                    if (
+                        this.setVisitedChild($(event.currentTarget).parentsUntil('.item').parent().index(), $(event.currentTarget).parent('.child-item').index())){
+                        $(event.currentTarget).parentsUntil('item-body').prev().addClass('visited');
                     }
                 }
             } else {
-                this.$('.doubleaccordion-child-item-title').removeClass('selected');
+                this.$('.child-item-title').removeClass('selected');
                 $(event.currentTarget).removeClass('selected');
-                $('.doubleaccordion-child-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
+                $('.child-item-title-icon', event.currentTarget).removeClass('icon-minus').addClass('icon-plus');
             }
             // set aria-expanded value
             if ($(event.currentTarget).hasClass('selected')) {
-                $('.doubleaccordion-item-title').attr('aria-expanded', false);
+                $('.item-title').attr('aria-expanded', false);
                 $(event.currentTarget).attr('aria-expanded', true);
             } else {
                 $(event.currentTarget).attr('aria-expanded', false);
@@ -110,15 +110,15 @@ define(function(require) {
 
         setVisited: function(index) {
             var item = this.model.get('_items')[index];
-            if(!item.hasOwnProperty('_child')){
-             item._isVisited = true;
+            if (!item.hasOwnProperty('_child')) {
+                item._isVisited = true;
             }
             this.checkCompletionStatus();
         },
 
         hasChild: function(index){
             var item = this.model.get('_items')[index];
-            if(item.hasOwnProperty('_child')){
+            if (item.hasOwnProperty('_child')) {
                 return true;
             }
             return false;
@@ -142,7 +142,7 @@ define(function(require) {
         checkCompletedItem: function(item) {
             var isComplete = true;
             _.filter(item._child, function(child) {
-                if(child._isVisited == false){
+                if (child._isVisited == false) {
                     isComplete = false;
                 }
             });

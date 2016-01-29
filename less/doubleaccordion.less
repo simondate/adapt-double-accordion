@@ -1,10 +1,10 @@
 .doubleaccordion-component {
 
-    .doubleaccordion-item {
+    .item {
         margin-bottom: @item-margin-bottom;
     }
 
-    .doubleaccordion-item-title-icon {
+    .item-title-icon {
         position: absolute;
         top: 50%;
         left: @item-padding-left;
@@ -16,15 +16,15 @@
         }
     }
 
-    .doubleaccordion-item-text{
+    .item-text{
         padding-bottom: 30px;
     }
 
-    .doubleaccordion-item-title-inner{
+    .item-title-inner{
         padding: 10px;    
     }
 
-    .doubleaccordion-child-item-title {
+    .child-item-title {
         display: block;
         position: relative;
         padding: @item-padding;
@@ -43,7 +43,7 @@
             background-color: @item-color-visited;
             border-color: @item-border-color-visited;
 
-            .doubleaccordion-item-title-icon {
+            .child-item-title-icon {
                 color: @item-text-color-visited;
             }
         }
@@ -53,7 +53,7 @@
             background-color: @item-color-selected;
             border-color: @item-border-color-selected;
 
-            .doubleaccordion-item-title-icon {
+            .child-item-title-icon {
                 color: @item-text-color-selected;
             }
         }
@@ -64,7 +64,7 @@
                 background-color: @item-color-hover;
                 border-color: @item-border-color-hover;
 
-                .doubleaccordion-item-title-icon {
+                .child-item-title-icon {
                     color: @item-text-color-hover;
                 }
             }
@@ -73,7 +73,7 @@
                 background-color: @item-color-hover;
                 border-color: @item-border-color-hover;
 
-                .doubleaccordion-item-title-icon {
+                .child-item-title-icon {
                     color: @item-text-color-hover;
                 }
             }
@@ -83,7 +83,11 @@
         }
     }
 
-    .doubleaccordion-item-title {
+    .child-item-title-inner {
+        text-align: left;
+    }
+
+    .item-title {
         display: block;
         position: relative;
         padding: @item-padding;
@@ -102,7 +106,7 @@
             background-color: @item-color-visited;
             border-color: @item-border-color-visited;
 
-            .doubleaccordion-item-title-icon {
+            .item-title-icon {
                 color: @item-text-color-visited;
             }
         }
@@ -112,7 +116,7 @@
             background-color: @item-color-selected;
             border-color: @item-border-color-selected;
 
-            .doubleaccordion-item-title-icon {
+            .item-title-icon {
                 color: @item-text-color-selected;
             }
         }
@@ -123,7 +127,7 @@
                 background-color: @item-color-hover;
                 border-color: @item-border-color-hover;
 
-                .doubleaccordion-item-title-icon {
+                .item-title-icon {
                     color: @item-text-color-hover;
                 }
             }
@@ -132,7 +136,7 @@
                 background-color: @item-color-hover;
                 border-color: @item-border-color-hover;
 
-                .doubleaccordion-item-title-icon {
+                .item-title-icon {
                     color: @item-text-color-hover;
                 }
             }
@@ -142,30 +146,42 @@
         }
     }
 
-    .doubleaccordion-child-item {
+    .child-item {
         padding-bottom: 10px;
 
-    }    
+    }
 
-    .doubleaccordion-child-item-body {
+    .child-item-title-icon {
+        position: absolute;
+        top: 50%;
+        left: @item-padding-left;
+        margin-top: -(@icon-size/2);
+        color: @item-text-color;
+        .dir-rtl & {
+            left: inherit;
+            right: @item-padding-left; 
+        }
+    }
+
+    .child-item-body {
         color: @item-body-text-color;
         padding: 10px;
         display:none;
     }
 
-    .doubleaccordion-children {
+    .children {
         color: @item-body-text-color;
     }
 
-    .doubleaccordion-item-body{
+    .item-body{
         display:none;        
     }    
 
-    .doubleaccordion-item-body-inner {
+    .item-body-inner {
         padding: @item-padding;
     }
 
-    .doubleaccordion-child-item-graphic {
+    .child-item-graphic {
         padding: @item-padding-top 0 0;
 
         img {
